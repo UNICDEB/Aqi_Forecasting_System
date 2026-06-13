@@ -29,6 +29,7 @@ sys.path.append(project_root)
 
 # 2. Now you can safely import from Src
 from Src.Evaluation.evaluator import Evaluator
+from Src.Evaluation.metrics import Metrics
 from Src.Feature_Engineering.dataset_builder import DatasetBuilder
 from Src.Feature_Engineering.scaler import AQIScaler
 from Src.Feature_Engineering.sequence_builder import SequenceBuilder
@@ -99,8 +100,30 @@ def main():
         y_test
     )
 
-    print("\n=== Evaluation Metrics ===")
+    y_test_original = scaler.inverse_transform(
+        y_test.reshape(
+            -1,
+            11
+        )
+    )
+
+    pred_original = scaler.inverse_transform(
+        predictions.reshape(
+            -1,
+            11
+        )
+    )
+
+    original_metrics = Metrics.calculate(
+        y_test_original,
+        pred_original
+    )
+
+    print("\n=== Evaluation Metrics (Scaled) ===")
     print(metrics)
+
+    print("\n=== Evaluation Metrics (Original Scale) ===")
+    print(original_metrics)
 
 if __name__ == "__main__":
     main()
