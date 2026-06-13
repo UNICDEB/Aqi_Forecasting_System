@@ -8,6 +8,9 @@ class OutlierDetector:
 
         for col in columns:
 
+            if col not in df.columns:
+                continue
+
             q1 = df[col].quantile(0.25)
 
             q3 = df[col].quantile(0.75)

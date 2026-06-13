@@ -13,7 +13,7 @@ COLUMN_MAPPING = {
 
     "CO2 (ppm)": "CO2",
 
-    "Temp (Â°C)": "TEMP",
+    "Temp (°C)": "TEMP",
 
     "Humidity %": "HUMIDITY",
 
