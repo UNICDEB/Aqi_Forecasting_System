@@ -209,7 +209,8 @@ def main():
         model,
         X_test,
         y_test,
-        model_name="LSTM"
+        model_name="LSTM",
+        scaler=scaler
     )
 
     print("\n=== Evaluation Metrics ===")

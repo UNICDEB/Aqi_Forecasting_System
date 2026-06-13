@@ -1,8 +1,6 @@
 # src/evaluation/evaluation_pipeline.py
 ## Code for running the evaluation pipeline.
 
-import pandas as pd
-
 from Src.Evaluation.evaluator import (
     Evaluator
 )
@@ -24,27 +22,25 @@ class EvaluationPipeline:
 
             y_test,
 
+            scaler,
+
             model_name="LSTM"
 
     ):
 
         evaluator = Evaluator()
 
-        predictions, metrics = (
+        predictions, metrics_df = evaluator.evaluate(
 
-            evaluator.evaluate(
+            model,
 
-                model,
+            X_test,
 
-                X_test,
+            y_test,
 
-                y_test
-
-            )
+            scaler
 
         )
-
-        metrics_df = metrics
 
         report = ExcelReport()
 

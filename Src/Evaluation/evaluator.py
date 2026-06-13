@@ -34,6 +34,10 @@ from Src.Evaluation.parameter_metrics import (
     ParameterMetrics
 )
 
+from Src.Evaluation.inverse_scaler import (
+    InverseScaler
+)
+
 
 class Evaluator:
 
@@ -45,7 +49,8 @@ class Evaluator:
 
             X_test,
 
-            y_test
+            y_test,
+            scaler
 
     ):
 
@@ -55,12 +60,22 @@ class Evaluator:
 
         calculator = ParameterMetrics()
 
-        metrics_df = calculator.calculate(
 
-            y_test,
+        inverse = InverseScaler()
 
+        y_true_original = inverse.transform(
+            scaler,
+            y_test
+        )
+
+        y_pred_original = inverse.transform(
+            scaler,
             predictions
+        )
 
+        metrics_df = calculator.calculate(
+            y_true_original,
+            y_pred_original
         )
 
         return predictions, metrics_df
