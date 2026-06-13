@@ -39,7 +39,7 @@ class FeaturePipeline:
         )
 
         scaler.save(
-            "models/scalers/global_scaler.pkl"
+            "Models/Scalers/global_scaler.pkl"
         )
 
         sequence_builder = SequenceBuilder()
