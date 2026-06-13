@@ -140,8 +140,7 @@ from tensorflow.keras.models import load_model
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(project_root)
 
-from Src.Evaluation.evaluator import Evaluator
-from Src.Evaluation.metrics import Metrics
+from Src.Evaluation.evaluation_pipeline import EvaluationPipeline
 from Src.Feature_Engineering.dataset_builder import DatasetBuilder
 from Src.Feature_Engineering.scaler import AQIScaler
 from Src.Feature_Engineering.sequence_builder import SequenceBuilder
@@ -205,31 +204,18 @@ def main():
     dataset_builder = DatasetBuilder()
     _, _, X_test, _, _, y_test = dataset_builder.split(X, y)
 
-    evaluator = Evaluator()
-    predictions, metrics = evaluator.evaluate(
+    pipeline = EvaluationPipeline()
+    predictions, metrics_df = pipeline.run(
         model,
         X_test,
-        y_test
+        y_test,
+        model_name="LSTM"
     )
 
-    y_test_original = scaler.inverse_transform(
-        y_test.reshape(-1, 11)
-    )
+    print("\n=== Evaluation Metrics ===")
+    print(metrics_df)
 
-    pred_original = scaler.inverse_transform(
-        predictions.reshape(-1, 11)
-    )
-
-    original_metrics = Metrics.calculate(
-        y_test_original,
-        pred_original
-    )
-
-    print("\n=== Evaluation Metrics (Scaled) ===")
-    print(metrics)
-
-    print("\n=== Evaluation Metrics (Original Scale) ===")
-    print(original_metrics)
+    print("\nSaved Excel report to: Reports/Metrics/LSTM_metrics.xlsx")
 
 
 if __name__ == "__main__":

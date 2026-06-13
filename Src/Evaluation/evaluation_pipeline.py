@@ -1,6 +1,8 @@
 # src/evaluation/evaluation_pipeline.py
 ## Code for running the evaluation pipeline.
 
+import pandas as pd
+
 from Src.Evaluation.evaluator import (
     Evaluator
 )
@@ -28,7 +30,7 @@ class EvaluationPipeline:
 
         evaluator = Evaluator()
 
-        predictions, metrics_df = (
+        predictions, metrics = (
 
             evaluator.evaluate(
 
@@ -41,6 +43,8 @@ class EvaluationPipeline:
             )
 
         )
+
+        metrics_df = metrics
 
         report = ExcelReport()
 
