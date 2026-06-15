@@ -52,7 +52,7 @@ class Trainer:
             X_train,
             y_train,
             validation_data=(X_val, y_val),
-            epochs=50,
+            epochs=5,
             batch_size=64,
             callbacks=get_callbacks(),
             verbose=1,
